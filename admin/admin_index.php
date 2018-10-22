@@ -98,33 +98,41 @@ $handle = new mysqli(EZSQL_DB_HOST,EZSQL_DB_USER,EZSQL_DB_PASSWORD);
 $dbsize = CalcFullDatabaseSize(EZSQL_DB_NAME, $handle);
 $handle->close();
 
-/* Redwine: added to /libs/smartyvriables.php */
-/*$votes = $db->get_var('SELECT count(*) from ' . table_votes . ' where vote_type="links";');
-$main_smarty->assign('votes', $votes);
+//Redwine: get the server host name
+$uname_Host_name = @php_uname('n');
 
-$comments = $db->get_var('SELECT count(*) from ' . table_comments . ';');
-$main_smarty->assign('comments', $comments);*/
+//get the Apache version_compare
+$ver = explode(" ",$_SERVER["SERVER_SOFTWARE"],3);
+if (isset($ver[1])) {
+	$apache_version = ($ver[0] . " " . $ver[1]);
+}else{
+	$apache_version = $ver[0];
+}
 
-/*$sql = mysql_query("SELECT link_id,link_date FROM " . table_links . " ORDER BY link_date DESC LIMIT 1");
-    while ($rows = mysql_fetch_array($sql)) {
-		$link_date = txt_time_diff(unixtimestamp($rows['link_date']));
-		$main_smarty->assign('link_date', $link_date . ' ' . $main_smarty->get_config_vars('PLIKLI_Visual_Comment_Ago'));
-		$main_smarty->assign('link_id', $rows['link_id']);
+//Operating system
+$uname_OS = @php_uname('s');
+
+//Architecture (Machine type)
+$uname_Machine_type = @php_uname('m');
+$machine_type = $uname_Machine_type;
+if ('x86_64' == $machine_type) {
+	$machine_type = '64-bit';
+} elseif (preg_match('/^i([3456]86)$/', $machine_type, $matches)) {
+	$machine_type = $matches[1];
 	}
 		
-$sql = mysql_query("SELECT link_id,comment_id,comment_link_id,comment_date FROM " . table_comments . "," . table_links . " WHERE comment_link_id = link_id ORDER BY comment_date DESC LIMIT 1");
-	while ($rows = mysql_fetch_array($sql)) {
-		$comment_date = txt_time_diff(unixtimestamp($rows['comment_date']));
-		$main_smarty->assign('comment_date', $comment_date . ' ' . $main_smarty->get_config_vars('PLIKLI_Visual_Comment_Ago'));
-		$main_smarty->assign('link_id', $rows['link_id']);
-		$main_smarty->assign('comment_id', $rows['comment_id']);
-	}*/
+//Release name (kernel version)
+$uname_Release_name = @php_uname('r');
 
-// read the mysql database to get the plikli version
-/* Redwine: plikli version query removed and added to /libs/smartyvriables.php */
-/*$sql = "SELECT data FROM " . table_misc_data . " WHERE name = 'plikli_version'";
-$plikli_version = $db->get_var($sql);
-$main_smarty->assign('version_number', $plikli_version);*/
+//Version Information
+$uname_Version_information = @php_uname('v');
+
+//get the ABSPATH
+if ($_SERVER['SERVER_NAME'] == 'localhost') {
+	define( 'ABSPATH', dirname( dirname( __FILE__ ) ) . '\\' );
+}else{
+	define( 'ABSPATH', dirname( dirname( __FILE__ ) ) . '/' );
+}
 
 // pagename
 define('pagename', 'admin_index'); 

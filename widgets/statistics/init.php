@@ -19,6 +19,11 @@ $sw_newuser='1';
 $phpver='1';
 $mysqlver='1';
 $sw_dbsize='1';
+$sw_sys_info='1';
+$sw_host_name='1';
+$sw_apache_version='1';
+$sw_Architecture='1';
+
 
 
 /*if ($_REQUEST['widget']=='statistics'){
@@ -75,5 +80,15 @@ if ($main_smarty){
 	$main_smarty->assign('phpver', $phpver);
 	$main_smarty->assign('mysqlver', $mysqlver);
 	$main_smarty->assign('dbsize', $dbsize);
+	$main_smarty->assign('sw_sys_info', $sw_sys_info);
+	$main_smarty->assign('sw_host_name', $sw_host_name);
+	$main_smarty->assign('uname_Host_name', $uname_Host_name);
+	$main_smarty->assign('sw_apache_version', $sw_apache_version);
+	$main_smarty->assign('apache_version', $apache_version);
+	$main_smarty->assign('operating_system', $uname_OS);
+	$main_smarty->assign('machine_type', $machine_type);
+	$main_smarty->assign('release_name', $uname_Release_name);
+	$main_smarty->assign('version_information', $uname_Version_information);
+	$main_smarty->assign('ABSPATH', ABSPATH);
 }
 ?>

@@ -1,5 +1,5 @@
 {checkActionsTpl location="tpl_plikli_admin_stats_widget_start"}
-<table class="table table-condensed table-striped" style="margin-bottom:0;">
+<table class="table table-condensed table-striped" style="margin-bottom:0;word-break: break-word;">
 	{if $sw_version eq "1"}
 		<tr>
 			<td>
@@ -386,9 +386,96 @@
 			</td>
 		</tr>
 	{/if}
-	{if $sw_members eq "1"}
+	{if $sw_sys_info eq "1"}
 		<tr>
 			<td>
+				<strong>
+				{#PLIKLI_Statistics_Widget_System_Information#}
+				</strong>
+			</td>
+			<td>
+			&nbsp;
+			</td>
+		</tr>
+		
+		<tr>
+			<td style="padding-left:40px">
+				<strong>
+				{#PLIKLI_Statistics_Widget_Server_Name#}
+				</strong>
+			</td>
+			<td>
+				{$uname_Host_name}
+			</td>
+		</tr>
+		
+		<tr>
+			<td style="padding-left:40px">
+				<strong>
+				{#PLIKLI_Statistics_Widget_Operating_System#}
+				</strong>
+			</td>
+			<td>
+				{$operating_system}
+			</td>
+		</tr>
+		
+		<tr>
+			<td style="padding-left:40px">
+				<strong>
+				{#PLIKLI_Statistics_Widget_System_Architecture#}
+				</strong>
+			</td>
+			<td>
+				{$machine_type}
+			</td>
+		</tr>
+		<tr>
+			<td style="padding-left:40px">
+				<strong>
+				{#PLIKLI_Statistics_Widget_System_Release_kernel#}
+				</strong>
+			</td>
+			<td>
+				{$release_name}
+			</td>
+		</tr>
+		
+		<tr>
+			<td style="padding-left:40px">
+				<strong>
+				{#PLIKLI_Statistics_Widget_Version_Information#}
+				</strong>
+			</td>
+			<td>
+				{$version_information}
+			</td>
+		</tr>
+		
+		<tr>
+			<td style="padding-left:40px">
+				<strong>
+				{#PLIKLI_Statistics_Widget_Apache_Version#}
+				</strong>
+			</td>
+			<td>
+				{$apache_version}
+			</td>
+		</tr>
+		
+		<tr>
+			<td style="padding-left:40px">
+				<strong>
+				{#PLIKLI_Statistics_Widget_System_Home_Web_Directory#}
+				</strong>
+			</td>
+			<td>
+				{$ABSPATH}
+			</td>
+		</tr>
+
+		<tr>
+			<td style="padding-left:40px">
 				<strong>
 				{#PLIKLI_Statistics_Widget_PHP_Version#}:
 				</strong>
@@ -403,10 +490,9 @@
 				{/php}{/if}
 			</td>
 		</tr>
-	{/if}
-	{if $sw_members eq "1"}
+
 		<tr>
-			<td>
+			<td style="padding-left:40px">
 				<strong>
 				{#PLIKLI_Statistics_Widget_MySQL_Server_Version#}:
 				</strong>
@@ -433,10 +519,9 @@
 				{/php}
 			</td>
 		</tr>
-	{/if}
-	{if $sw_members eq "1"}
+
 		<tr>
-			<td>
+			<td style="padding-left:40px">
 				<strong>
 				{#PLIKLI_Statistics_Widget_MySQL_Client_Version#}:
 				</strong>
@@ -477,10 +562,9 @@
 				{/php}
 			</td>
 		</tr>
-	{/if}
-	{if $sw_members eq "1"}
+
 		<tr>
-			<td>
+			<td style="padding-left:40px">
 				<strong>
 				{#PLIKLI_Statistics_Widget_DB_Size#}:
 				</strong>
@@ -489,6 +573,12 @@
 				{$dbsize}
 			</td>
 		</tr>
+		
+		
+		
+		
+		
+		
 	{/if}
 	{checkActionsTpl location="tpl_plikli_admin_stats_widget_intable"}
 </table>
