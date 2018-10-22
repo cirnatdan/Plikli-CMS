@@ -825,7 +825,7 @@ class Link {
 
 				$tag_array = explode(",", $tags_words);
 				$c = count($tag_array);
-				$tag_array[$c] = $this->tags;
+				//$tag_array[$c] = $this->tags;
  				$c++;
  				for($i=0; $i<=$c; $i++)
  				{
@@ -837,7 +837,7 @@ class Link {
 				    }
 				  }
  				}
- 				$tag_array[$c - 1] = $alltagtext;
+ 				//$tag_array[$c - 1] = $alltagtext;
 
 				$smarty->assign('tag_array', $tag_array);
 				$smarty->assign('tags_url_array', $tags_url_array);
