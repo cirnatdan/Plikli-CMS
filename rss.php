@@ -195,7 +195,7 @@ function do_rss_header($title) {
 	echo '<channel>'."\n";
 	echo '<title>'.htmlspecialchars($main_smarty->get_config_vars("PLIKLI_Visual_Name")).' '.trim($title).'</title>'."\n";
 	echo '<link>'.my_base_url.my_plikli_base.'</link>'."\n";
-	echo '<description>'.$main_smarty->get_config_vars("PLIKLI_Visual_RSS_Description").'</description>'."\n";
+	echo '<description>'.htmlspecialchars($main_smarty->get_config_vars("PLIKLI_Visual_RSS_Description")).'</description>'."\n";
 	echo '<pubDate>'.date('D, d M Y H:i:s T', $last_modified-misc_timezone*3600).'</pubDate>'."\n";
 	echo '<language>'.$dblang.'</language>'."\n";
 }
