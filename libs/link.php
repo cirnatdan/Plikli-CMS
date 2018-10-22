@@ -912,20 +912,11 @@ class Link {
 	function truncate_content(){
 		if(utf8_strlen($this->content) > StorySummary_ContentTruncate){
 			if (!use_title_as_link) {$url_read = $this->get_internal_url(); }else{$url_read = $this->url;}
-			 if(Auto_scroll==true){
 				global $main_smarty;
-				$content=	close_tags(utf8_substr($this->content, 0, StorySummary_ContentTruncate));
-				$content.="<div class=\"read_more_article\" storyid=\"".$this->id."\" ><a href=".$url_read."> ".$main_smarty->get_config_vars('PLIKLI_Visual_Read_More')."</a></div>" ;
-				$content.="<div class=\"read_more_story".$this->id." hide\" >";
-				$content.=close_tags(utf8_substr($this->content, StorySummary_ContentTruncate,utf8_strlen($this->content) ));
-				$content.="</div>";
-				// echo $content;
+			$readmore="<div class=\"read_more_article\" storyid=\"".$this->id."\" ><a href=".$url_read."> ".$main_smarty->get_config_vars('PLIKLI_Visual_Read_More')."</a></div>" ;
+			$content= truncate_strings_html($this->content, StorySummary_ContentTruncate, $break=" ", '');
+			$content .= $readmore;
 				return $content;
-			 }else{
-			 
-			 return close_tags(utf8_substr($this->content, 0, StorySummary_ContentTruncate)) . "...";
-			 }
-			 
 			 }
 		return $this->content;
 	}

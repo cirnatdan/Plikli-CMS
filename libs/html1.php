@@ -687,6 +687,45 @@ function verifyPassHash($plainText, $hashedPass){
 	}
 }
 
+function truncate_strings_html($string, $limit, $break=" ", $pad="")
+{
+	// return with no change if string is shorter than $limit
+	if(mb_strlen($string, 'UTF-8') <= $limit) return $string;
+
+	// is $break present between $limit and the end of the string?
+		if(false !== ($breakpoint = mb_strpos($string, $break, $limit, "UTF-8"))) {
+			if($breakpoint < mb_strlen($string, 'UTF-8') - 1) {
+				// $string = substr($string, 0, $breakpoint) . $pad;
+				$string = mb_substr($string, 0, $breakpoint, "UTF-8") . $pad;
+			}
+		}
+
+	#put all opened tags into an array	
+	preg_match_all ( "#<([a-z]+)( .*)?(?!/)>#iU", $string, $result );
+	$openedtags = $result[1];
+	#put all closed tags into an array
+	preg_match_all ( "#</([a-z]+)>#iU", $string, $result );
+
+	$closedtags = $result[1];
+	$len_opened = count ( $openedtags );
+
+	# all tags are closed
+	if( count ( $closedtags ) == $len_opened ) {
+		return $string;
+
+	}
+
+	$openedtags = array_reverse ( $openedtags );
+	# close tags
+	for( $i = 0; $i < $len_opened; $i++ ) {
+		if ( !in_array ( $openedtags[$i], $closedtags ) ) {
+			$string .= "</" . $openedtags[$i] . ">";
+		} else {
+			unset ( $closedtags[array_search ( $openedtags[$i], $closedtags)] );
+		}
+	}
+	return $string;
+}
 function getmyFullurl($x, $var1="", $var2="", $var3="") {
 	return my_base_url . getmyurl($x, $var1, $var2, $var3);
 }

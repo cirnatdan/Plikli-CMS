@@ -497,8 +497,8 @@ color: #ffffff !important;
 color:#005580;
 cursor:pointer;
 }
-.read_more_article:after {
-content: "...";
+.read_more_article:after {/*
+content: "...";*/
 }
 
 /**************** VOTE ******************/
