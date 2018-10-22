@@ -87,7 +87,7 @@ if ($link) {
 			$linkres->id=$link_id = sanitize($_POST['id'], 3);
 			if(!is_numeric($link_id)) die();
 			$linkres->read();
-
+			$org_tags = $linkres->tags;
 			// if notify link submitter is selected
 				if(isset($_POST["notify"])) {
 					if(sanitize($_POST["notify"], 3) == "yes") {
@@ -231,7 +231,7 @@ if ($link) {
 					$linkres->status = 'discard';
 					$story_url = getmyurl($linkres->status, '');
 			}
-			tags_insert_string($linkres->id, $dblang, $linkres->tags);
+			tags_insert_edit($linkres->id, $dblang, $linkres->tags, 0, $org_tags);
 			$linkres->store();
 				$story_url = $my_base_url.str_replace("&amp;", "&", $story_url);
 			header('Location: ' . $story_url);

@@ -19,23 +19,69 @@ function tags_insert_string($link, $lang, $string, $date = 0) {
 	if ($words) {
 		$db->query("delete from " . table_tags . " where tag_link_id = $link");
 		foreach ($words as $word) {
-			$word=trim($word);
+			$word=trim($db->escape($word));
 /* Redwine: fix bug that was not insterting the tags in the tables. */
 			if ($inserted[$word] == false && !empty($word)) {
 				$db->query("insert IGNORE into " . table_tags . " (tag_link_id, tag_lang, tag_words, tag_date) values ($link, '$lang', '$word', from_unixtime($date))");
 				$inserted[$word] = true;
 			}
+			$db->query("INSERT INTO ".table_tag_cache." (`tag_words`, `count`) VALUES ('$word', `count` + 1) ON DUPLICATE KEY UPDATE `tag_words` = '$word', `count` = `count` + 1;");
 		}
-		$db->query("TRUNCATE TABLE ".table_tag_cache);
-		$db->query("INSERT INTO ".table_tag_cache." select tag_words, count(DISTINCT link_id) as count FROM ".table_tags.", ".table_links." WHERE tag_lang='en' and link_id = tag_link_id and (link_status='published' OR link_status='new') GROUP BY tag_words order by count desc");
-
 		return true;
 	}
 	return false;
-
 }
 
+function difference_tags ($arg1, $arg2){
+	$arg1 = tags_normalize_string($arg1);
+	$arg2 = tags_normalize_string($arg2);
+    $arg1 = explode (',', $arg1);
+    $arg2 = explode (',', $arg2);
 
+    $Difference_tags = array_diff($arg1, $arg2);
+    $Difference = implode(',', $Difference_tags);
+    return $Difference;
+}
+
+function tags_insert_edit($link, $lang, $string, $date = 0, $original_tags) {
+	global $db;
+	if (!is_numeric($link)) die();
+
+	if ($string != $original_tags) {
+		/*Redwine: We want to check if any of the original tags were removed, so that we delete them from the tags table and update the tags cache table.*/
+		$check_tags_difference = difference_tags($original_tags,$string);
+		if ($check_tags_difference != '') {
+			if ($date == 0) $date=time();
+			$words = preg_split('/[,;]+/', $check_tags_difference);
+			if ($words) {
+				foreach ($words as $word) {
+					$word=trim($db->escape($word));			
+						$db->query("DELETE FROM " . table_tags . " WHERE `tag_words` = '$word' AND `tag_link_id` = $link;");
+						$db->query("UPDATE " . table_tag_cache . " SET `count` = `count` - 1 WHERE `tag_words` = '$word';");
+				}				
+			}
+		}
+		
+		/*Redwine: To get the new tags to insert in the tags and tags cache tables*/
+		$check_tags_difference = difference_tags($string,$original_tags);
+		if ($check_tags_difference != '') {
+			if ($date == 0) $date=time();
+			$words = preg_split('/[,;]+/', $check_tags_difference);
+			if ($words) {
+				foreach ($words as $word) {
+					$word=trim($db->escape($word));
+					if ($inserted[$word] == false && !empty($word)) {
+						$db->query("insert IGNORE into " . table_tags . " (tag_link_id, tag_lang, tag_words, tag_date) values ($link, '$lang', '$word', from_unixtime($date))");
+						$inserted[$word] = true;
+					}
+					$db->query("INSERT INTO ".table_tag_cache." (`tag_words`, `count`) VALUES ('$word', `count` + 1) ON DUPLICATE KEY UPDATE `tag_words` = '$word', `count` = `count` + 1;");
+				}
+				return true;
+			}
+			return false;
+		}
+	}
+}
 
 class TagCloud {
     var $word_limit = NULL; // limit to cloud to this many words

@@ -667,7 +667,8 @@ function plikli_createtables($conn) {
 
 	$sql = "CREATE TABLE `" . table_tag_cache . "` (
 		  `tag_words` varchar(64) NOT NULL,
-		  `count` int(11) NOT NULL
+		  `count` int(11) NOT NULL,
+		  PRIMARY KEY (`tag_words`)
 		) ENGINE =MyISAM DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;";
 	mysqli_query( $conn, $sql );
 	$successful = checktableexists(table_tag_cache);
