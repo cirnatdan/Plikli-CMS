@@ -100,7 +100,7 @@ if (!$errors) {
 	if (file_exists($approvedips)) {
 		$user_ip = get_ip_address();
 		if ($user_ip){
-			$filedata = "$user_ip \n";
+			$filedata = "$user_ip\n";
 			// print $filedata;
 			// echo 'IP: '.get_ip_address();
 			
