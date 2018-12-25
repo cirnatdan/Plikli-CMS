@@ -176,6 +176,13 @@ $output='
 		</div>
 
 		<div class="control-group">
+			<label for="input01" class="control-label">' . $lang['DatabasePort'] . '</label>
+			<div class="controls">
+				<input class="form-control" name="dbport" type="text" value="3306" />
+			</div>
+		</div>
+
+		<div class="control-group">
 			<label for="input01" class="control-label">' . $lang['TablePrefix'] . '</label>
 			<div class="controls">
 				<input class="form-control" name="tableprefix" type="text" value="plikli_" />
