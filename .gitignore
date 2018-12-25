@@ -1,6 +1,6 @@
 .env
 cache/*
-logs/*
+logs/*.log
 libs/dbconnect.php
 settings.php
 unsubscribe.php
