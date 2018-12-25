@@ -135,8 +135,9 @@ if (!$errors) {
 	$dbpass = EZSQL_DB_PASSWORD;
 	$dbname = EZSQL_DB_NAME;
 	$dbhost = EZSQL_DB_HOST;
+	$dbport = EZSQL_DB_PORT;
 
-	if($conn = @mysqli_connect($dbhost,$dbuser,$dbpass))
+	if($conn = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname,$dbport))
 	 {
 		$db_selected = mysqli_select_db($conn, $dbname);
 		if (!$db_selected) { die ('Error: '.$dbname.' : '.mysqli_error($conn)); }

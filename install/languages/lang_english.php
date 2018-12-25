@@ -52,6 +52,7 @@
 	$lang['DatabaseUsername'] = 'Database Username';
 	$lang['DatabasePassword'] = 'Database Password';
 	$lang['DatabaseServer'] = 'Database Server';
+	$lang['DatabasePort'] = 'Database Port';
 	$lang['TablePrefix'] = 'Table Prefix';
 	$lang['PrefixExample'] = '(ie: "plikli_" makes the tables for users become plikli_users)';
 	$lang['CheckSettings'] = 'Check Settings';
