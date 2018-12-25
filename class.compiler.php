@@ -375,12 +375,14 @@ class Template_Lite_Compiler extends Template_Lite {
 				return $this->right_delimiter;
 				break;
 			case 'literal':
-				list (,$literal) = each($this->_literal);
+				$literal = current($this->_literal);
+				next($this->_literal);
 				$this->_linenum += substr_count($literal, "\n");
 				return "<?php echo '" . str_replace("'", "\'", str_replace("\\", "\\\\", $literal)) . "'; ?>\n";
 				break;
 			case 'php':
-				list (,$php_block) = each($this->_php_blocks);
+				$php_block = current($this->_php_blocks);
+				next($this->_php_blocks);
 				$this->_linenum += substr_count($php_block, "\n");
 				$php_extract = '';
 				if($this->php_extract_vars)
