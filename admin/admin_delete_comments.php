@@ -72,7 +72,7 @@ foreach($result as $comment)
 				echo '<p><strong>'.$num_rows.'</strong> '.$main_smarty->get_config_vars("PLIKLI_Visual_AdminPanel_Discarded_Comments_Removed_Message").'</p>';
 			//}
 			include_once('../libs/dbconnect.php');
-			$handle = new mysqli(EZSQL_DB_HOST,EZSQL_DB_USER,EZSQL_DB_PASSWORD,EZSQL_DB_NAME);
+			$handle = new mysqli(EZSQL_DB_HOST,EZSQL_DB_USER,EZSQL_DB_PASSWORD,EZSQL_DB_NAME,EZSQL_DB_PORT);
 			/* check connection */
 			if (mysqli_connect_errno()) {
 				printf("Connect failed: %s\n", mysqli_connect_error());

@@ -89,6 +89,10 @@ var $DBPass = EZSQL_DB_PASSWORD;
 */
 // var $DBHost = 'localhost';
 var $DBHost = EZSQL_DB_HOST;
+/*
+* @var Used to save the Port of the MySql Server
+*/
+var $DBPort = EZSQL_DB_PORT;
 	/*
 	* @var  Used to save the table name
 	*/
@@ -108,7 +112,7 @@ var $DBHost = EZSQL_DB_HOST;
 		global $con;
 		if($connect)
 		{
-			$con = new mysqli($this->DBHost,$this->DBUser,$this->DBPass,$this->DBName);
+			$con = new mysqli($this->DBHost,$this->DBUser,$this->DBPass,$this->DBName,$this->DBPort);
 			if (mysqli_connect_errno()) {
 				printf("Connect failed: %s\n", mysqli_connect_error());
 				exit();

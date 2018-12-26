@@ -396,7 +396,7 @@ if(!defined('mnminclude')){header('Location: ../error_404.php');die();}
 		{
 			if ( ! isset($this->dbh) || ! $this->dbh )
 			{
-				$this->connect($this->dbuser, $this->dbpassword, $this->dbhost, $this->dbname, $this->dbport);
+				$this->connect($this->dbuser, $this->dbpassword, $this->dbhost, $this->dbport);
 				$this->select($this->dbname);
 			}
 			return mysqli_real_escape_string($this->dbh, $str);
