@@ -501,7 +501,7 @@
 				{php}
 					{* Redwine: Fix to the Statistics Widget to accurately get the MySql Version. https://github.com/Pligg/pligg-cms/commit/1ed283f70f5e8c08c1b2bdc34e6c61c40ef7b01a *}
 					/* Redwine: creating a mysqli connection */
-					$mysqli = new mysqli(EZSQL_DB_HOST,EZSQL_DB_USER,EZSQL_DB_PASSWORD,EZSQL_DB_NAME);
+					$mysqli = new mysqli(EZSQL_DB_HOST,EZSQL_DB_USER,EZSQL_DB_PASSWORD,EZSQL_DB_NAME,EZSQL_DB_PORT);
 					/* check connection */
 					if (mysqli_connect_errno()) {
 						printf("Connect failed: %s\n", mysqli_connect_error());
