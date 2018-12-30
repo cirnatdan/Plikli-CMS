@@ -542,6 +542,10 @@ if(!defined('mnminclude')){header('Location: ../error_404.php');die();}
 
 	}
 
+	if (!defined('EZSQL_DB_PORT')) {
+		define('EZSQL_DB_PORT', 3306);
+	}
+
 	$db = new ezSQL_mysql(EZSQL_DB_USER, EZSQL_DB_PASSWORD, EZSQL_DB_NAME, EZSQL_DB_HOST, EZSQL_DB_PORT);
 	/*
 	$db->show_errors = false;
