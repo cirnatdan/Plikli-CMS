@@ -272,18 +272,20 @@ if(!defined('mnminclude')){header('Location: ../error_404.php');die();}
 		var $dbpassword = false;
 		var $dbname = false;
 		var $dbhost = false;
+		var $dbport = false;
 
 		/**********************************************************************
 		*  Constructor - allow the user to perform a qucik connect at the
 		*  same time as initialising the ezSQL_mysql class
 		*/
 
-		function __construct($dbuser='', $dbpassword='', $dbname='', $dbhost='localhost')
+		function __construct($dbuser='', $dbpassword='', $dbname='', $dbhost='localhost', $dbport=3306)
 		{
 			$this->dbuser = $dbuser;
 			$this->dbpassword = $dbpassword;
 			$this->dbname = $dbname;
 			$this->dbhost = $dbhost;
+			$this->dbport = $dbport;
 		}
 
 		/**********************************************************************
@@ -291,10 +293,10 @@ if(!defined('mnminclude')){header('Location: ../error_404.php');die();}
 		*  and select a mySQL database at the same time
 		*/
 
-		function quick_connect($dbuser='', $dbpassword='', $dbname='', $dbhost='localhost')
+		function quick_connect($dbuser='', $dbpassword='', $dbname='', $dbhost='localhost', $dbport=3306)
 			{
 			$return_val = false;
-			if ( ! $this->connect($dbuser, $dbpassword, $dbhost,true) ) ;
+			if ( ! $this->connect($dbuser, $dbpassword, $dbhost, $dbport) ) ;
 			else if ( ! $this->select($dbname) ) ;
 			else $return_val = true;
 			return $return_val;
@@ -304,7 +306,7 @@ if(!defined('mnminclude')){header('Location: ../error_404.php');die();}
 		*  Try to connect to mySQL database server
 		*/
 
-		function connect($dbuser='', $dbpassword='', $dbhost='localhost')
+		function connect($dbuser='', $dbpassword='', $dbhost='localhost', $dbport=3306)
 		{
 			global $ezsql_mysql_str; $return_val = false;
 
@@ -316,7 +318,7 @@ if(!defined('mnminclude')){header('Location: ../error_404.php');die();}
 				die($ezsql_mysql_str[1]);
 			}
 			// Try to establish the server database handle
-			else if ( ! $this->dbh = @mysqli_connect($dbhost,$dbuser,$dbpassword) )
+			else if ( ! $this->dbh = @mysqli_connect($dbhost,$dbuser,$dbpassword,'pligg',$dbport) )
 			{
 				$this->register_error($ezsql_mysql_str[2].' in '.__FILE__.' on line '.__LINE__);
 				$this->show_errors ? trigger_error($ezsql_mysql_str[2],E_USER_WARNING) : null;
@@ -394,7 +396,7 @@ if(!defined('mnminclude')){header('Location: ../error_404.php');die();}
 		{
 			if ( ! isset($this->dbh) || ! $this->dbh )
 			{
-				$this->connect($this->dbuser, $this->dbpassword, $this->dbhost);
+				$this->connect($this->dbuser, $this->dbpassword, $this->dbhost, $this->dbport);
 				$this->select($this->dbname);
 			}
 			return mysqli_real_escape_string($this->dbh, $str);
@@ -444,7 +446,7 @@ if(!defined('mnminclude')){header('Location: ../error_404.php');die();}
 			// If there is no existing database connection then try to connect
 			if ( ! isset($this->dbh) || ! $this->dbh )
 			{
-				$this->connect($this->dbuser, $this->dbpassword, $this->dbhost);
+				$this->connect($this->dbuser, $this->dbpassword, $this->dbhost, $this->dbport);
 				$this->select($this->dbname);
 			}
 
@@ -539,11 +541,15 @@ if(!defined('mnminclude')){header('Location: ../error_404.php');die();}
 		}
 
 	}
-	
-	$db = new ezSQL_mysql(EZSQL_DB_USER, EZSQL_DB_PASSWORD, EZSQL_DB_NAME, EZSQL_DB_HOST);
+
+	if (!defined('EZSQL_DB_PORT')) {
+		define('EZSQL_DB_PORT', 3306);
+	}
+
+	$db = new ezSQL_mysql(EZSQL_DB_USER, EZSQL_DB_PASSWORD, EZSQL_DB_NAME, EZSQL_DB_HOST, EZSQL_DB_PORT);
 	/*
 	$db->show_errors = false;
-	$db->quick_connect(EZSQL_DB_USER, EZSQL_DB_PASSWORD, EZSQL_DB_NAME, EZSQL_DB_HOST);
+	$db->quick_connect(EZSQL_DB_USER, EZSQL_DB_PASSWORD, EZSQL_DB_NAME, EZSQL_DB_HOST, EZSQL_DB_PORT);
 	if(count($db->captured_errors) > 0){
 		global $main_smarty, $the_template;
 	

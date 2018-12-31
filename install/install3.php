@@ -45,9 +45,10 @@ if(!isset($dbuser)){
   $dbpass = $_POST['dbpass'];
   $dbname = $_POST['dbname'];
   $dbhost = $_POST['dbhost'];
+  $dbport = $_POST['dbport'];
 }
 
-if($conn = @mysqli_connect($dbhost,$dbuser,$dbpass)) {
+if($conn = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname,$dbport)) {
 	
 	@$_SESSION['checked_step'] = 3;
 	
@@ -60,6 +61,7 @@ if($conn = @mysqli_connect($dbhost,$dbuser,$dbpass)) {
 			$str .= "define(\"EZSQL_DB_PASSWORD\", '".$dbpass."');"."\n";
 			$str .= "define(\"EZSQL_DB_NAME\", '".$dbname."');"."\n";
 			$str .= "define(\"EZSQL_DB_HOST\", '".$dbhost."');"."\n";
+			$str .= "define(\"EZSQL_DB_PORT\", '".$dbport."');"."\n";
 			$str .= "if (!function_exists('gettext')) {"."\n";
 			$str .= '	function _($s) {return $s;}'."\n";
 			$str .= '}'."\n";
@@ -117,6 +119,7 @@ if($check_errors !== false){
   	  <input type="hidden" name="dbpass" value="'.addslashes(strip_tags($_POST['dbpass'])).'" />
   	  <input type="hidden" name="dbname" value="'.addslashes(strip_tags($_POST['dbname'])).'" />
   	  <input type="hidden" name="dbhost" value="'.addslashes(strip_tags($_POST['dbhost'])).'" />
+  	  <input type="hidden" name="dbhost" value="'.addslashes(strip_tags($_POST['dbport'])).'" />
   	  <input type="hidden" name="tableprefix" value="'.addslashes(strip_tags($_POST['tableprefix'])).'" />
 	  <input type="hidden" name="language" value="' . addslashes(strip_tags($_REQUEST['language'])) . '">
   	  <input type="hidden" name="step" value="4">

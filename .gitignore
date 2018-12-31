@@ -1,0 +1,7 @@
+.env
+cache/*
+logs/*.log
+libs/dbconnect.php
+settings.php
+unsubscribe.php
+vendor/
